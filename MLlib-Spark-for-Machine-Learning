@@ -37,7 +37,7 @@ from pyspark.mllib.regression import LabeledPoint
 data = results.select("OrderMonthYear", "SaleAmount")\
   .map(lambda r: LabeledPoint(r[1],[r[o]]))\
   .toDF()
-  
+ 
 display(data)
 
 #======================================================================================
