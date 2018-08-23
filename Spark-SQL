@@ -1,0 +1,43 @@
+# SQL
+
+# Create table w/o schema
+CREATE TABLE  IF NOT EXISTS population_v_price
+USING CSV
+OPTIONS (path "/bulabula/data_geo.csv", header "true", inferSchema "true");
+
+/* check results */
+select * from population_v_price limit 100;
+
+# Create table w/ schema
+CREATE TABLE IF NOT EXISTS online_retail(
+InvoiceNo string,
+StockCode string,
+Description string,
+Quantity int,
+InvoiceDate string,
+UnitPrice double,
+CustomerID int,
+Country string)
+USING CSV
+OPTIONS (path "/databricks-datasets/online_retail/data-001/data.csv", header "true");
+
+/* check results */
+select * from online_retail limit 100;
+
+# Some queries
+select *
+from cogsley_sales
+limit 100;
+
+select CompanyName, IPOYear, Symbol, round(sum(SaleAmount)) as Sales
+from cogsley_sales
+left join cogsley_clients on CompanyName = Name
+group by CompanyName, IPOYear, Symbol
+order by 1
+
+select i.StateCode, round(sum(s.SaleAmount)) as Sales
+from cogsley_sales s
+join state_info i on s.State = i.State
+group by i.StateCode
+
+# Print charts by databricks(select->click on the icon on the lower left quarter)
